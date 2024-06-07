@@ -4,8 +4,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import "dotenv/config.js";
-import reservationRouter from "./routes/reservation";
+import { reservationRouter, userRouter, authRouter } from "./routes";
 import { Environment, getEnvironment } from "./utils/getEnvironment";
+import { errorMiddleware } from "./middleware";
 
 const app = express();
 
@@ -38,8 +39,11 @@ app.use(
     "[:date[iso]] :status :method :url :res[content-length] - :response-time ms"
   )
 );
+app.use(errorMiddleware);
 
-//routes
+// routes
+app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 app.use("/api/reservation", reservationRouter);
 
 //? middleware to log all 500 requests into google cloud

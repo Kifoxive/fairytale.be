@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import {
-  PostReservationRequest,
-  PostReservationResponse,
-} from "./reservation.interface";
+import { ReservationDto } from "./reservation.dtos";
+import { PostReservationRequest } from "./reservation.interface";
 import ReservationModel from "./reservation.model";
 
 // import { postCreateValidation } from "../validators/validations.js";
@@ -29,7 +27,7 @@ export async function postReservation(
     //   }
     // );
 
-    return res.json(reservation);
+    return res.json({ data: ReservationDto(reservation) });
   } catch (err) {
     console.log(err);
     return res.status(500).json({
@@ -38,29 +36,25 @@ export async function postReservation(
   }
 }
 
-//   async getAll(req, res) {
-//     try {
-//       const page = req.query.page || 0;
-//       const postsPerPage = 10;
-//       await ReservationModel.find()
-//         .sort({ createdAt: -1 })
-//         .skip(page * postsPerPage)
-//         .limit(postsPerPage)
-//         .populate("user")
-//         .populate("selectedProducts")
-//         .exec((err, doc) => {
-//           const posts = doc.map((elem) => {
-//             return new PostDto(elem);
-//           });
-//           res.json({ posts });
-//         });
-//     } catch (err) {
-//       console.log(err);
-//       res.status(500).json({
-//         message: "Failed to get posts",
-//       });
-//     }
-//   }
+export async function getAllReservations(req: Request, res: Response) {
+  try {
+    const limit = (req.query.limit as unknown as number) || 40;
+    const offset = (req.query.offset as unknown as number) || 0;
+
+    ReservationModel.find()
+      .skip(limit * offset)
+      .limit(limit)
+      .exec((err, doc) => {
+        const reservations = doc.map((elem) => ReservationDto(elem));
+        res.json({ data: reservations, totalCount: reservations.length });
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Failed to get reservations",
+    });
+  }
+}
 
 //   async getMine(req, res) {
 //     try {
