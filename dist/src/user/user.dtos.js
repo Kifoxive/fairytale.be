@@ -7,6 +7,7 @@ function UserDto(model) {
         email: model.email,
         firstName: model.firstName,
         lastName: model.lastName,
+        role: model.role,
         avatarUrl: model.avatarUrl,
         isActivated: model.isActivated,
         createdAt: new Date(model.createdAt).getTime(),

@@ -9,8 +9,8 @@ declare const UserModel: mongoose.Model<{
     role: "admin" | "guest";
     isActivated: boolean;
     lastName?: string;
-    avatarUrl?: string;
     phone?: string;
+    avatarUrl?: string;
 }, {}, {}, {}, mongoose.Schema<any, mongoose.Model<any, any, any, any, any>, {}, {}, {}, {}, mongoose.ResolveSchemaOptions<{
     timestamps: true;
 }>, {
@@ -23,7 +23,7 @@ declare const UserModel: mongoose.Model<{
     role: "admin" | "guest";
     isActivated: boolean;
     lastName?: string;
-    avatarUrl?: string;
     phone?: string;
+    avatarUrl?: string;
 }>>;
 export default UserModel;

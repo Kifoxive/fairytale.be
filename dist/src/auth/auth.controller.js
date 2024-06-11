@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMe = exports.refresh = exports.loginUser = exports.registerUser = void 0;
+exports.logout = exports.getMe = exports.refresh = exports.loginUser = exports.registerUser = void 0;
 const services_1 = require("../services");
 const user_model_1 = __importDefault(require("../user/user.model"));
 const exceptions_1 = require("../exceptions");
@@ -119,16 +119,18 @@ exports.getMe = getMe;
 //       next(err);
 //     }
 //   }
-//   async logout(req, res, next) {
-//     try {
-//       const { refreshToken } = req.cookies;
-//       await userService.logout(refreshToken);
-//       res.clearCookie("refreshToken");
-//       return res.sendStatus(200);
-//     } catch (e) {
-//       next(e);
-//     }
-//   }
+async function logout(req, res, next) {
+    try {
+        const { refreshToken } = req.cookies;
+        await (0, services_1.logoutService)(refreshToken);
+        res.clearCookie("refreshToken");
+        return res.sendStatus(200);
+    }
+    catch (e) {
+        next(e);
+    }
+}
+exports.logout = logout;
 //   async activate(req, res, next) {
 //     try {
 //       const activationLink = req.params.link;

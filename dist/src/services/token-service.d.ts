@@ -32,21 +32,21 @@ export declare function generateTokens(payload: ITokenPayload): {
 export declare function validateAccessToken(token: string): IUser;
 export declare function validateRefreshToken(token: string): IUser;
 export declare function saveToken(userId: string, refreshToken: string): Promise<import("mongoose").Document<unknown, any, {
-    user: import("mongoose").Types.ObjectId;
     refreshToken: string;
+    user: import("mongoose").Types.ObjectId;
 }> & Omit<{
-    user: import("mongoose").Types.ObjectId;
     refreshToken: string;
+    user: import("mongoose").Types.ObjectId;
 } & {
     _id: import("mongoose").Types.ObjectId;
 }, never>>;
 export declare function removeToken(refreshToken: string): Promise<import("mongodb").DeleteResult>;
 export declare function findToken(refreshToken: string): Promise<import("mongoose").Document<unknown, any, {
-    user: import("mongoose").Types.ObjectId;
     refreshToken: string;
+    user: import("mongoose").Types.ObjectId;
 }> & Omit<{
-    user: import("mongoose").Types.ObjectId;
     refreshToken: string;
+    user: import("mongoose").Types.ObjectId;
 } & {
     _id: import("mongoose").Types.ObjectId;
 }, never>>;

@@ -1,8 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reservationFormSchema = void 0;
+exports.reservationFormSchema = exports.RESERVATION_STATUS = void 0;
 const enum_1 = require("src/utils/enum");
 const zod_1 = require("zod");
+var RESERVATION_STATUS;
+(function (RESERVATION_STATUS) {
+    RESERVATION_STATUS["waiting"] = "waiting";
+    RESERVATION_STATUS["cancelled"] = "cancelled";
+    RESERVATION_STATUS["successful"] = "successful";
+})(RESERVATION_STATUS = exports.RESERVATION_STATUS || (exports.RESERVATION_STATUS = {}));
 // request for reservation
 const reservationFormSchema = () => zod_1.z.object({
     name: zod_1.z.string(),

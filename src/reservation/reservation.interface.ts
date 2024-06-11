@@ -1,5 +1,11 @@
-import { phoneRegex } from "src/utils/enum";
+import { phoneRegex } from "../utils/enum";
 import { z } from "zod";
+
+export enum RESERVATION_STATUS {
+  waiting = "waiting",
+  cancelled = "cancelled",
+  successful = "successful",
+}
 
 // request for reservation
 export const reservationFormSchema = () =>

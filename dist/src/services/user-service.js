@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.refreshTokenService = exports.loginService = exports.registrationService = void 0;
+exports.refreshTokenService = exports.logoutService = exports.loginService = exports.registrationService = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const uuid_1 = require("uuid");
 const user_model_1 = __importDefault(require("../user/user.model"));
@@ -54,9 +54,10 @@ async function loginService({ email, password }) {
     return { ...tokens, user: userDto };
 }
 exports.loginService = loginService;
-// async logout(refreshToken) {
-//   await tokenService.removeToken(refreshToken);
-// }
+async function logoutService(refreshToken) {
+    await (0, token_service_1.removeToken)(refreshToken);
+}
+exports.logoutService = logoutService;
 async function refreshTokenService(refreshToken) {
     if (!refreshToken) {
         throw exceptions_1.ApiError.UnauthorizedError();

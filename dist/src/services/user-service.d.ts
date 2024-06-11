@@ -18,6 +18,7 @@ export declare function loginService({ email, password }: ILoginService): Promis
     accessToken: string;
     refreshToken: string;
 }>;
+export declare function logoutService(refreshToken: string): Promise<void>;
 export declare function refreshTokenService(refreshToken: string): Promise<{
     user: import("../user/user.dtos").IUser;
     accessToken: string;

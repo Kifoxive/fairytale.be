@@ -6,6 +6,7 @@ import { UserDto } from "../user/user.dtos";
 import { AuthUserDto } from "../auth/auth.dtos";
 import {
   generateTokens,
+  removeToken,
   saveToken,
   validateRefreshToken,
 } from "./token-service";
@@ -89,9 +90,9 @@ export async function loginService({ email, password }: ILoginService) {
   return { ...tokens, user: userDto };
 }
 
-// async logout(refreshToken) {
-//   await tokenService.removeToken(refreshToken);
-// }
+export async function logoutService(refreshToken: string) {
+  await removeToken(refreshToken);
+}
 
 export async function refreshTokenService(refreshToken: string) {
   if (!refreshToken) {

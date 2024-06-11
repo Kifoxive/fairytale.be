@@ -23,8 +23,8 @@ export async function getEmailAvailability(
     const accessToken = authorizationHeader?.replace(/Bearer\s?/, "");
     const userData = validateAccessToken(accessToken);
 
-    UserModel.findOne({ email: req.query.email }).exec((error, doc) => {
-      if (error || (userData && doc?._id.toString() === userData.user_id)) {
+    UserModel.findOne({ email: req.query.email }).exec((_error, doc) => {
+      if (!doc || (userData && doc?._id.toString() === userData.user_id)) {
         return res.json({ isAvailable: true });
       }
 

@@ -31,9 +31,6 @@ router.post("/register", authController.registerUser);
 router.post("/login", authController.loginUser);
 router.get("/refresh", authController.refresh);
 router.get("/me", middleware_1.checkAuth, authController.getMe);
-// router.get('/csv', auth, customerController.customersExportToCsv);
-// router.get('/:id', auth, customerController.customerGet);
-// router.post('/', auth, customerController.customerPost);
-// router.put('/:id', auth, customerController.customerPut);
+router.post("/logout", authController.logout);
 exports.default = router;
 //# sourceMappingURL=auth.js.map

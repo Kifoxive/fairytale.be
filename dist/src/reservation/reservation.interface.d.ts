@@ -1,4 +1,9 @@
 import { z } from "zod";
+export declare enum RESERVATION_STATUS {
+    waiting = "waiting",
+    cancelled = "cancelled",
+    successful = "successful"
+}
 export declare const reservationFormSchema: () => z.ZodObject<{
     name: z.ZodString;
     phone: z.ZodNullable<z.ZodUnion<[z.ZodString, z.ZodLiteral<"">]>>;

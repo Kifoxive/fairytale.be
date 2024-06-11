@@ -1,13 +1,15 @@
 import { Router } from "express";
+import { isAdminAuth } from "../middleware";
 import * as reservationController from "../reservation/reservation.controller";
 
 const router = Router();
 
-router.post("/", reservationController.postReservation);
-router.get("/", reservationController.getAllReservations);
-// router.get('/csv', auth, customerController.customersExportToCsv);
-// router.get('/:id', auth, customerController.customerGet);
-// router.post('/', auth, customerController.customerPost);
-// router.put('/:id', auth, customerController.customerPut);
+router.post("/", isAdminAuth, reservationController.postReservation);
+router.get("/", isAdminAuth, reservationController.getAllReservations);
+router.post(
+  "/change-status",
+  isAdminAuth,
+  reservationController.changeReservationStatus
+);
 
 export default router;

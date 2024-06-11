@@ -1,3 +1,5 @@
+import { RESERVATION_STATUS } from "./reservation.interface";
+
 export type IReservation = {
   name: string;
   date: number;
@@ -7,6 +9,7 @@ export type IReservation = {
   duration: number;
   personCount: number | null;
   note: string | null;
+  status: RESERVATION_STATUS;
   createdAt: number;
   updatedAt: number;
   reservation_id: string;
@@ -29,6 +32,7 @@ export function ReservationDto(
     duration: model.duration,
     personCount: model.personCount,
     note: model.note,
+    status: model.status,
     createdAt: new Date(model.createdAt).getTime(),
     updatedAt: new Date(model.updatedAt).getTime(),
     reservation_id: model._id,

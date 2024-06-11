@@ -7,8 +7,10 @@ export default function errorMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  console.log(err.message);
+  // console.log(err.message);
   if (err instanceof ApiError) {
+    console.log(true);
+    console.log(err.status);
     return res
       .status(err.status)
       .json({ message: err.message, errors: err.errors });

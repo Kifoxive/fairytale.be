@@ -1,13 +1,16 @@
 import { NextFunction, Request, Response } from "express";
-import { ReservationDto } from "./reservation.dtos";
-import { PostReservationRequest } from "./reservation.interface";
+import { IReservation, ReservationDto } from "./reservation.dtos";
+import {
+  PostReservationRequest,
+  RESERVATION_STATUS,
+} from "./reservation.interface";
 import ReservationModel from "./reservation.model";
 
 // import { postCreateValidation } from "../validators/validations.js";
 // import { checkAuth, handleValidationErrors } from "../middlewares/index.js";
 
 export async function postReservation(
-  req: Request,
+  req: Request<any>,
   res: Response,
   next: NextFunction
 ): Promise<Response> {
@@ -36,7 +39,7 @@ export async function postReservation(
   }
 }
 
-export async function getAllReservations(req: Request, res: Response) {
+export async function getAllReservations(req: Request<any>, res: Response) {
   try {
     const limit = (req.query.limit as unknown as number) || 40;
     const offset = (req.query.offset as unknown as number) || 0;
@@ -117,30 +120,31 @@ export async function getAllReservations(req: Request, res: Response) {
 //     }
 //   }
 
-//   async update(req, res) {
-//     try {
-//       const postId = req.params.id;
-//       await ReservationModel.updateOne(
-//         {
-//           _id: postId,
-//         },
-//         {
-//           title: req.body.title,
-//           text: req.body.text,
-//           imageUrl: req.body.imageUrl,
-//           tags: req.body.tags,
-//           user: req.userId,
-//           selectedProducts: req.body.selectedProducts,
-//         }
-//       );
-//       res.json({ postId });
-//     } catch (err) {
-//       console.log(err);
-//       res.status(500).json({
-//         message: "Failed to update the post",
-//       });
-//     }
-//   }
+export async function changeReservationStatus(
+  req: Request<any>,
+  res: Response
+) {
+  try {
+    const { reservation_id, status } = req.body.data as {
+      reservation_id: string;
+      status: RESERVATION_STATUS;
+    };
+    const reservation = await ReservationModel.updateOne(
+      {
+        _id: reservation_id,
+      },
+      {
+        status: RESERVATION_STATUS[status],
+      }
+    );
+    res.json({ data: reservation });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Failed to approve the reservation",
+    });
+  }
+}
 
 //   async remove(req, res) {
 //     try {

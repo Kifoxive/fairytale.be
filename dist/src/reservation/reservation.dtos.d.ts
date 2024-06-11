@@ -1,4 +1,4 @@
-export type ReservationDto = {
+export type IReservation = {
     name: string;
     date: number;
     phone: string | null;
@@ -11,4 +11,4 @@ export type ReservationDto = {
     updatedAt: number;
     reservation_id: string;
 };
-export declare function ReservationDto(model: any): ReservationDto;
+export declare function ReservationDto(model: any): IReservation;

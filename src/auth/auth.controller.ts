@@ -5,6 +5,7 @@ import {
   loginService,
   registrationService,
   refreshTokenService,
+  logoutService,
 } from "../services";
 
 import UserModel from "../user/user.model";
@@ -148,17 +149,17 @@ export async function getMe(
 //     }
 //   }
 
-//   async logout(req, res, next) {
-//     try {
-//       const { refreshToken } = req.cookies;
-//       await userService.logout(refreshToken);
-//       res.clearCookie("refreshToken");
+export async function logout(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { refreshToken } = req.cookies;
+    await logoutService(refreshToken);
+    res.clearCookie("refreshToken");
 
-//       return res.sendStatus(200);
-//     } catch (e) {
-//       next(e);
-//     }
-//   }
+    return res.sendStatus(200);
+  } catch (e) {
+    next(e);
+  }
+}
 
 //   async activate(req, res, next) {
 //     try {
