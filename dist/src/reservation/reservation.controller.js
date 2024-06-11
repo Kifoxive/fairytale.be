@@ -3,8 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllReservations = exports.postReservation = void 0;
+exports.changeReservationStatus = exports.getAllReservations = exports.postReservation = void 0;
 const reservation_dtos_1 = require("./reservation.dtos");
+const reservation_interface_1 = require("./reservation.interface");
 const reservation_model_1 = __importDefault(require("./reservation.model"));
 // import { postCreateValidation } from "../validators/validations.js";
 // import { checkAuth, handleValidationErrors } from "../middlewares/index.js";
@@ -112,30 +113,24 @@ exports.getAllReservations = getAllReservations;
 //       });
 //     }
 //   }
-//   async update(req, res) {
-//     try {
-//       const postId = req.params.id;
-//       await ReservationModel.updateOne(
-//         {
-//           _id: postId,
-//         },
-//         {
-//           title: req.body.title,
-//           text: req.body.text,
-//           imageUrl: req.body.imageUrl,
-//           tags: req.body.tags,
-//           user: req.userId,
-//           selectedProducts: req.body.selectedProducts,
-//         }
-//       );
-//       res.json({ postId });
-//     } catch (err) {
-//       console.log(err);
-//       res.status(500).json({
-//         message: "Failed to update the post",
-//       });
-//     }
-//   }
+async function changeReservationStatus(req, res) {
+    try {
+        const { reservation_id, status } = req.body.data;
+        const reservation = await reservation_model_1.default.updateOne({
+            _id: reservation_id,
+        }, {
+            status: reservation_interface_1.RESERVATION_STATUS[status],
+        });
+        res.json({ data: reservation });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: "Failed to approve the reservation",
+        });
+    }
+}
+exports.changeReservationStatus = changeReservationStatus;
 //   async remove(req, res) {
 //     try {
 //       const postId = req.params.id;

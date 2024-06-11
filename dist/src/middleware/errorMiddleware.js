@@ -2,8 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const exceptions_1 = require("../exceptions");
 function errorMiddleware(err, req, res, next) {
-    console.log(err.message);
+    // console.log(err.message);
     if (err instanceof exceptions_1.ApiError) {
+        console.log(true);
+        console.log(err.status);
         return res
             .status(err.status)
             .json({ message: err.message, errors: err.errors });

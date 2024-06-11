@@ -1,3 +1,4 @@
+import { RESERVATION_STATUS } from "./reservation.interface";
 export type IReservation = {
     name: string;
     date: number;
@@ -7,6 +8,7 @@ export type IReservation = {
     duration: number;
     personCount: number | null;
     note: string | null;
+    status: RESERVATION_STATUS;
     createdAt: number;
     updatedAt: number;
     reservation_id: string;

@@ -17,6 +17,7 @@ model) {
         duration: model.duration,
         personCount: model.personCount,
         note: model.note,
+        status: model.status,
         createdAt: new Date(model.createdAt).getTime(),
         updatedAt: new Date(model.updatedAt).getTime(),
         reservation_id: model._id,

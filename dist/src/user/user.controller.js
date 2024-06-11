@@ -24,8 +24,8 @@ async function getEmailAvailability(req, res) {
         const authorizationHeader = req.headers.authorization;
         const accessToken = authorizationHeader?.replace(/Bearer\s?/, "");
         const userData = (0, services_1.validateAccessToken)(accessToken);
-        user_model_1.default.findOne({ email: req.query.email }).exec((error, doc) => {
-            if (error || (userData && doc?._id.toString() === userData.user_id)) {
+        user_model_1.default.findOne({ email: req.query.email }).exec((_error, doc) => {
+            if (!doc || (userData && doc?._id.toString() === userData.user_id)) {
                 return res.json({ isAvailable: true });
             }
             res.status(401).json({ isAvailable: false });

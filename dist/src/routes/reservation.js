@@ -24,13 +24,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const middleware_1 = require("../middleware");
 const reservationController = __importStar(require("../reservation/reservation.controller"));
 const router = (0, express_1.Router)();
-router.post("/", reservationController.postReservation);
-router.get("/", reservationController.getAllReservations);
-// router.get('/csv', auth, customerController.customersExportToCsv);
-// router.get('/:id', auth, customerController.customerGet);
-// router.post('/', auth, customerController.customerPost);
-// router.put('/:id', auth, customerController.customerPut);
+router.post("/", middleware_1.isAdminAuth, reservationController.postReservation);
+router.get("/", middleware_1.isAdminAuth, reservationController.getAllReservations);
+router.post("/change-status", middleware_1.isAdminAuth, reservationController.changeReservationStatus);
 exports.default = router;
 //# sourceMappingURL=reservation.js.map

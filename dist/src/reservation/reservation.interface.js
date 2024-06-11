@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reservationFormSchema = exports.RESERVATION_STATUS = void 0;
-const enum_1 = require("src/utils/enum");
+const enum_1 = require("../utils/enum");
 const zod_1 = require("zod");
 var RESERVATION_STATUS;
 (function (RESERVATION_STATUS) {
