@@ -16,7 +16,7 @@ const start = async () => {
         })
             .then(() => console.log("Connected to database"));
         app_1.default.listen(PORT, function () {
-            console.log("Started application on port %d", 3000);
+            console.log("Started application on port %d", PORT);
         });
     }
     catch (e) {

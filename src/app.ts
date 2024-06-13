@@ -4,20 +4,26 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import "dotenv/config.js";
-import { reservationRouter, userRouter, authRouter } from "./routes";
+import {
+  reservationRouter,
+  userRouter,
+  authRouter,
+  mealController,
+  mealCategoryController,
+} from "./routes";
 import { Environment, getEnvironment } from "./utils/getEnvironment";
 import { errorMiddleware } from "./middleware";
 
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["https://fairytale-fe.netlify.app/", "http://localhost:5173"],
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   credentials: true,
 };
 
 const corsOptionsDev = {
-  origin: ["http://localhost:5173"],
+  origin: ["https://fairytale-fe.netlify.app/", "http://localhost:5173"],
   credentials: true,
 };
 
@@ -45,6 +51,8 @@ app.use(errorMiddleware);
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/reservation", reservationRouter);
+app.use("/api/meal", mealController);
+app.use("/api/mealCategory", mealCategoryController);
 
 //? middleware to log all 500 requests into google cloud
 // app.use(errorLogger);

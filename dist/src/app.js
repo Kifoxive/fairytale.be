@@ -14,7 +14,7 @@ const getEnvironment_1 = require("./utils/getEnvironment");
 const middleware_1 = require("./middleware");
 const app = (0, express_1.default)();
 const corsOptions = {
-    origin: [],
+    origin: ["http://localhost:5173"],
     optionsSuccessStatus: 200,
     credentials: true,
 };

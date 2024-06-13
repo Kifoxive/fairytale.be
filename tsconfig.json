@@ -14,5 +14,6 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "esModuleInterop": true
+
   }
 }
