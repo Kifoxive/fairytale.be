@@ -18,13 +18,13 @@ import fileUpload from "express-fileupload";
 const app = express();
 
 const corsOptions = {
-  origin: ["https://fairytale-fe.netlify.app/", "http://localhost:5173"],
+  origin: ["https://fairytale-fe.netlify.app"],
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   credentials: true,
 };
 
 const corsOptionsDev = {
-  origin: ["https://fairytale-fe.netlify.app/", "http://localhost:5173"],
+  origin: ["https://fairytale-fe.netlify.app", "http://localhost:5173"],
   credentials: true,
 };
 
