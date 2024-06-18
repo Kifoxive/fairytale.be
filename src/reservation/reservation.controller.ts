@@ -9,6 +9,26 @@ import ReservationModel from "./reservation.model";
 // import { postCreateValidation } from "../validators/validations.js";
 // import { checkAuth, handleValidationErrors } from "../middlewares/index.js";
 
+export async function getAllReservations(req: Request<any>, res: Response) {
+  try {
+    const limit = (req.query.limit as unknown as number) || 40;
+    const offset = (req.query.offset as unknown as number) || 0;
+
+    ReservationModel.find()
+      .skip(limit * offset)
+      .limit(limit)
+      .exec((err, doc) => {
+        const reservations = doc.map((elem) => ReservationDto(elem));
+        res.json({ data: reservations, totalCount: reservations.length });
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Failed to get reservations",
+    });
+  }
+}
+
 export async function postReservation(
   req: Request<any>,
   res: Response,
@@ -35,26 +55,6 @@ export async function postReservation(
     console.log(err);
     return res.status(500).json({
       message: "Failed to create reservation",
-    });
-  }
-}
-
-export async function getAllReservations(req: Request<any>, res: Response) {
-  try {
-    const limit = (req.query.limit as unknown as number) || 40;
-    const offset = (req.query.offset as unknown as number) || 0;
-
-    ReservationModel.find()
-      .skip(limit * offset)
-      .limit(limit)
-      .exec((err, doc) => {
-        const reservations = doc.map((elem) => ReservationDto(elem));
-        res.json({ data: reservations, totalCount: reservations.length });
-      });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      message: "Failed to get reservations",
     });
   }
 }

@@ -1,15 +1,4 @@
-export type IMeal = {
-  meal_id: string;
-  name: string;
-  price: number;
-  weight: string;
-  allergens: string[];
-  description: string | null;
-  order: number;
-  mealCategory_id: string;
-  imgUrl: string;
-  show: boolean;
-};
+import { IMeal } from "./meal.interface";
 
 export function MealDto(model: any): IMeal {
   return {

@@ -3,10 +3,10 @@ declare const ReservationModel: mongoose.Model<{
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
-    email: string;
-    date: number;
     name: string;
+    date: number;
     status: "waiting" | "cancelled" | "successful";
+    email: string;
     time: string;
     duration: number;
     personCount: number;
@@ -18,10 +18,10 @@ declare const ReservationModel: mongoose.Model<{
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
-    email: string;
-    date: number;
     name: string;
+    date: number;
     status: "waiting" | "cancelled" | "successful";
+    email: string;
     time: string;
     duration: number;
     personCount: number;

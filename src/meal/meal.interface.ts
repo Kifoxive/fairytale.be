@@ -1,22 +1,31 @@
 import { z } from "zod";
+import { Schema } from "mongoose";
 
 // request for meal creating
-export const mealFormSchema = () =>
+export const postMealRequestSchema = () =>
   z.object({
-    name: z.string(),
-    description: z.string(),
-    price: z.number(),
-    weight: z.string(),
-    allergens: z.array(z.string()),
-    mealCategory_id: z.string(),
-    imgUrl: z.string().nullable(),
+    data: z.object({
+      name: z.string(),
+      description: z.string(),
+      price: z.number(),
+      weight: z.string(),
+      allergens: z.array(z.string()),
+      mealCategory_id: z.string(),
+      imgUrl: z.string().nullable(),
+    }),
   });
 
-// post meal request
-const postMealRequestSchema = () =>
-  z.object({
-    data: mealFormSchema(),
-  });
-
-export type MealForm = z.infer<ReturnType<typeof mealFormSchema>>;
 export type PostMealRequest = z.infer<ReturnType<typeof postMealRequestSchema>>;
+
+export type IMeal = {
+  meal_id: Schema.Types.ObjectId;
+  name: string;
+  price: number;
+  weight: string;
+  allergens: string[];
+  description: string | null;
+  order: number;
+  mealCategory_id: string;
+  imgUrl: string;
+  show: boolean;
+};

@@ -14,18 +14,18 @@ export declare const reservationFormSchema: () => z.ZodObject<{
     personCount: z.ZodNullable<z.ZodNumber>;
     note: z.ZodString;
 }, "strip", z.ZodTypeAny, {
-    phone?: string;
-    date?: number;
     name?: string;
+    date?: number;
+    phone?: string;
     email?: string;
     time?: string;
     duration?: number;
     personCount?: number;
     note?: string;
 }, {
-    phone?: string;
-    date?: number;
     name?: string;
+    date?: number;
+    phone?: string;
     email?: string;
     time?: string;
     duration?: number;
@@ -43,18 +43,18 @@ declare const postReservationRequestSchema: () => z.ZodObject<{
         personCount: z.ZodNullable<z.ZodNumber>;
         note: z.ZodString;
     }, "strip", z.ZodTypeAny, {
-        phone?: string;
-        date?: number;
         name?: string;
+        date?: number;
+        phone?: string;
         email?: string;
         time?: string;
         duration?: number;
         personCount?: number;
         note?: string;
     }, {
-        phone?: string;
-        date?: number;
         name?: string;
+        date?: number;
+        phone?: string;
         email?: string;
         time?: string;
         duration?: number;
@@ -63,9 +63,9 @@ declare const postReservationRequestSchema: () => z.ZodObject<{
     }>;
 }, "strip", z.ZodTypeAny, {
     data?: {
-        phone?: string;
-        date?: number;
         name?: string;
+        date?: number;
+        phone?: string;
         email?: string;
         time?: string;
         duration?: number;
@@ -74,9 +74,9 @@ declare const postReservationRequestSchema: () => z.ZodObject<{
     };
 }, {
     data?: {
-        phone?: string;
-        date?: number;
         name?: string;
+        date?: number;
+        phone?: string;
         email?: string;
         time?: string;
         duration?: number;

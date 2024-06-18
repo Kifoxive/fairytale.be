@@ -13,6 +13,7 @@ import {
 } from "./routes";
 import { Environment, getEnvironment } from "./utils/getEnvironment";
 import { errorMiddleware } from "./middleware";
+import fileUpload from "express-fileupload";
 
 const app = express();
 
@@ -38,6 +39,12 @@ app.use(
     maxAge: 5184000,
   })
 );
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
+// app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -52,7 +59,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/reservation", reservationRouter);
 app.use("/api/meal", mealController);
-app.use("/api/mealCategory", mealCategoryController);
+app.use("/api/meal-category", mealCategoryController);
 
 //? middleware to log all 500 requests into google cloud
 // app.use(errorLogger);

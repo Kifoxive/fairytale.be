@@ -24,10 +24,10 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { Schema } from "mongoose";
 declare const TokenModel: import("mongoose").Model<{
-    user: import("mongoose").Types.ObjectId;
     refreshToken: string;
+    user: import("mongoose").Types.ObjectId;
 }, {}, {}, {}, Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, {
-    user: import("mongoose").Types.ObjectId;
     refreshToken: string;
+    user: import("mongoose").Types.ObjectId;
 }>>;
 export default TokenModel;

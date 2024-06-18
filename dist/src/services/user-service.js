@@ -43,6 +43,7 @@ async function loginService({ email, password }) {
     if (!user) {
         throw exceptions_1.ApiError.BadRequest(`Bad login or password`);
     }
+    console.log(user.passwordHash);
     const isPassEquals = await bcrypt_1.default.compare(password, user.passwordHash);
     if (!isPassEquals) {
         throw exceptions_1.ApiError.BadRequest(`Bad login or password`);

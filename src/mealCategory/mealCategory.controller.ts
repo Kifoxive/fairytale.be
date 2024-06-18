@@ -1,27 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { MealCategoryDto } from "./mealCategory.dtos";
-import { PostMealCategory } from "./mealCategory.interface";
+import { PostMealCategoryRequest } from "./mealCategory.interface";
 
 import MealCategoryModel from "./mealCategory.model";
-
-export async function postMealCategory(
-  req: Request<any>,
-  res: Response,
-  next: NextFunction
-): Promise<Response> {
-  try {
-    const newMealCategory = req.body.data as PostMealCategory["request"];
-    const doc = new MealCategoryModel(newMealCategory);
-    const result = await doc.save();
-
-    return res.json({ data: MealCategoryDto(result) });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({
-      message: "Failed to create meal category",
-    });
-  }
-}
 
 export async function getAllMealCategories(req: Request<any>, res: Response) {
   try {
@@ -43,24 +24,25 @@ export async function getAllMealCategories(req: Request<any>, res: Response) {
   }
 }
 
-//   async getMine(req, res) {
-//     try {
-//       const userId = req.userId;
-//       await ReservationModel.find({ user: userId })
-//         .sort({ createdAt: -1 })
-//         .populate("user")
-//         .populate("selectedProducts")
-//         .exec((err, doc) => {
-//           const posts = doc.map((elem) => {
-//             return new PostDto(elem);
-//           });
-//           res.json({ posts });
-//         });
-//     } catch (err) {
-//       console.log(err);
-//       res.status(500).json({ message: "failed to get posts" });
-//     }
-//   }
+export async function getMealCategoriesList(req: Request<any>, res: Response) {
+  try {
+    MealCategoryModel.find().exec((_err, doc) => {
+      const mealCategoriesList = doc.map((elem) => ({
+        label: elem.name,
+        value: elem._id,
+      }));
+      res.json({
+        data: mealCategoriesList,
+        totalCount: mealCategoriesList.length,
+      });
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Failed to get meal categories",
+    });
+  }
+}
 
 export async function getOneMealCategory(req: Request<any>, res: Response) {
   try {
@@ -91,31 +73,44 @@ export async function getOneMealCategory(req: Request<any>, res: Response) {
   }
 }
 
-// export async function changeReservationStatus(
-//   req: Request<any>,
-//   res: Response
-// ) {
-//   try {
-//     const { reservation_id, status } = req.body.data as {
-//       reservation_id: string;
-//       status: RESERVATION_STATUS;
-//     };
-//     const reservation = await ReservationModel.updateOne(
-//       {
-//         _id: reservation_id,
-//       },
-//       {
-//         status: RESERVATION_STATUS[status],
-//       }
-//     );
-//     res.json({ data: reservation });
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({
-//       message: "Failed to approve the reservation",
-//     });
-//   }
-// }
+export async function postMealCategory(
+  req: Request<any>,
+  res: Response,
+  next: NextFunction
+): Promise<Response> {
+  try {
+    const newMealCategory = req.body.data as PostMealCategoryRequest;
+    const doc = new MealCategoryModel(newMealCategory);
+    const result = await doc.save();
+
+    return res.json({ data: MealCategoryDto(result) });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: "Failed to create meal category",
+    });
+  }
+}
+
+export async function updateMealCategory(req: Request<any>, res: Response) {
+  try {
+    const mealCategoryId = req.params.id;
+    const updatedMealCategory = req.body.data as PostMealCategoryRequest;
+    const result = await MealCategoryModel.updateOne(
+      {
+        _id: mealCategoryId,
+      },
+      updatedMealCategory
+    );
+
+    return res.json({ data: MealCategoryDto(result) });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: "Failed to update meal category",
+    });
+  }
+}
 
 //   async remove(req, res) {
 //     try {

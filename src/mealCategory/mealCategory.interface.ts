@@ -1,30 +1,25 @@
 import { z } from "zod";
+import { Schema } from "mongoose";
 
-export const mealCategoryFormSchema = () =>
+// request for meal category creating
+export const postMealCategoryRequestSchema = () =>
   z.object({
-    name: z.string(),
-    description: z.string(),
-    subMealCategoriesId: z.array(z.string()),
+    data: z.object({
+      name: z.string(),
+      description: z.string(),
+      subMealCategoriesId: z.array(z.string()),
+    }),
   });
 
-export type MealCategoryForm = z.infer<
-  ReturnType<typeof mealCategoryFormSchema>
+export type PostMealCategoryRequest = z.infer<
+  ReturnType<typeof postMealCategoryRequestSchema>
 >;
 
 export type IMealCategory = {
-  mealCategory_id: string;
+  mealCategory_id: Schema.Types.ObjectId;
   name: string;
   description: string | null;
-  subMealCategoriesId: string[];
+  subMealCategoriesId: Schema.Types.ObjectId[];
   show: boolean;
   order: number | null;
-};
-
-export type PostMealCategory = {
-  request: {
-    data: MealCategoryForm;
-  };
-  response: {
-    data: IMealCategory;
-  };
 };

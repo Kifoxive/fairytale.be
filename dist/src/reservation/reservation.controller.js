@@ -3,12 +3,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.changeReservationStatus = exports.getAllReservations = exports.postReservation = void 0;
+exports.changeReservationStatus = exports.postReservation = exports.getAllReservations = void 0;
 const reservation_dtos_1 = require("./reservation.dtos");
 const reservation_interface_1 = require("./reservation.interface");
 const reservation_model_1 = __importDefault(require("./reservation.model"));
 // import { postCreateValidation } from "../validators/validations.js";
 // import { checkAuth, handleValidationErrors } from "../middlewares/index.js";
+async function getAllReservations(req, res) {
+    try {
+        const limit = req.query.limit || 40;
+        const offset = req.query.offset || 0;
+        reservation_model_1.default.find()
+            .skip(limit * offset)
+            .limit(limit)
+            .exec((err, doc) => {
+            const reservations = doc.map((elem) => (0, reservation_dtos_1.ReservationDto)(elem));
+            res.json({ data: reservations, totalCount: reservations.length });
+        });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: "Failed to get reservations",
+        });
+    }
+}
+exports.getAllReservations = getAllReservations;
 async function postReservation(req, res, next) {
     try {
         const newReservation = req.body.data;
@@ -35,26 +55,6 @@ async function postReservation(req, res, next) {
     }
 }
 exports.postReservation = postReservation;
-async function getAllReservations(req, res) {
-    try {
-        const limit = req.query.limit || 40;
-        const offset = req.query.offset || 0;
-        reservation_model_1.default.find()
-            .skip(limit * offset)
-            .limit(limit)
-            .exec((err, doc) => {
-            const reservations = doc.map((elem) => (0, reservation_dtos_1.ReservationDto)(elem));
-            res.json({ data: reservations, totalCount: reservations.length });
-        });
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).json({
-            message: "Failed to get reservations",
-        });
-    }
-}
-exports.getAllReservations = getAllReservations;
 //   async getMine(req, res) {
 //     try {
 //       const userId = req.userId;

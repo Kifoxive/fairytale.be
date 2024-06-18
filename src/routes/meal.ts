@@ -4,10 +4,10 @@ import * as mealController from "../meal/meal.controller";
 
 const router = Router();
 
+router.get("/", isAdminAuth, mealController.getAllMeals);
+router.get("/:id", isAdminAuth, mealController.getOneMeal);
 router.post("/", isAdminAuth, mealController.postMeal);
-// router.get('/csv', auth, customerController.customersExportToCsv);
-// router.get('/:id', auth, customerController.customerGet);
-// router.post('/', auth, customerController.customerPost);
-// router.put('/:id', auth, customerController.customerPut);
+router.put("/:id", isAdminAuth, mealController.updateMeal);
+router.post("/file", isAdminAuth, mealController.uploadMealFile);
 
 export default router;
