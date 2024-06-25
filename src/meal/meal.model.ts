@@ -32,4 +32,5 @@ const MealSchema = new Schema({
   show: { type: Boolean, default: true },
 });
 
-export const MealModel = model("Meal", MealSchema);
+const MealModel = model("Meal", MealSchema);
+export default MealModel;

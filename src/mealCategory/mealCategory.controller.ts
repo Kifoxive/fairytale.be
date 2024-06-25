@@ -3,6 +3,8 @@ import { MealCategoryDto } from "./mealCategory.dtos";
 import { PostMealCategoryRequest } from "./mealCategory.interface";
 
 import MealCategoryModel from "./mealCategory.model";
+import MealModel from "../meal/meal.model";
+import { MealDto } from "../meal/meal.dtos";
 
 export async function getAllMealCategories(req: Request<any>, res: Response) {
   try {
@@ -36,6 +38,48 @@ export async function getMealCategoriesList(req: Request<any>, res: Response) {
         totalCount: mealCategoriesList.length,
       });
     });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Failed to get meal categories",
+    });
+  }
+}
+
+export async function getMenu(req: Request<any>, res: Response) {
+  try {
+    const mealCategoriesWithMeals = await MealCategoryModel.aggregate([
+      {
+        $lookup: {
+          from: "meals", // collection to join
+          localField: "_id", // field from the input documents
+          foreignField: "mealCategory_id", // field from the documents of the "from" collection
+          as: "meals", // output array field
+        },
+      },
+      {
+        $project: {
+          name: 1,
+          description: 1,
+          subMealCategoriesId: 1,
+          order: 1,
+          show: 1,
+          meals: 1, // include the "meals" array
+        },
+      },
+    ]);
+
+    // Apply DTO transformations
+    const formattedMealCategories = mealCategoriesWithMeals.map((category) => {
+      const formattedMeals = category.meals.map((meal) => MealDto(meal));
+      const formattedCategory = MealCategoryDto(category);
+      return {
+        ...formattedCategory,
+        meals: formattedMeals,
+      };
+    });
+
+    res.json({ data: formattedMealCategories });
   } catch (err) {
     console.log(err);
     res.status(500).json({

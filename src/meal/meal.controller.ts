@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { MealDto } from "./meal.dtos";
 import { PostMealRequest } from "./meal.interface";
-import { MealModel } from "./meal.model";
+import MealModel from "./meal.model";
 import { Schema } from "mongoose";
 
 import { cropImageService, uploadFileService } from "../services";
