@@ -29,6 +29,7 @@ const mealCategoryController = __importStar(require("../mealCategory/mealCategor
 const router = (0, express_1.Router)();
 router.get("/", middleware_1.isAdminAuth, mealCategoryController.getAllMealCategories);
 router.get("/list", middleware_1.isAdminAuth, mealCategoryController.getMealCategoriesList);
+router.get("/menu", mealCategoryController.getMenu);
 router.get("/:id", middleware_1.isAdminAuth, mealCategoryController.getOneMealCategory);
 router.post("/", middleware_1.isAdminAuth, mealCategoryController.postMealCategory);
 router.put("/:id", middleware_1.isAdminAuth, mealCategoryController.updateMealCategory);

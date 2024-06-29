@@ -8,7 +8,8 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const auth_model_1 = __importDefault(require("../auth/auth.model"));
 function generateTokens(payload) {
     const accessToken = jsonwebtoken_1.default.sign(payload, process.env.JWT_ACCESS_SECRET, {
-        expiresIn: "10m",
+        expiresIn: "30m",
+        // expiresIn: "10s",
     });
     const refreshToken = jsonwebtoken_1.default.sign(payload, process.env.JWT_REFRESH_SECRET, {
         expiresIn: "30d",

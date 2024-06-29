@@ -6,6 +6,7 @@ import {
   registrationService,
   refreshTokenService,
   logoutService,
+  activateEmailService,
 } from "../services";
 
 import UserModel from "../user/user.model";
@@ -161,16 +162,20 @@ export async function logout(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-//   async activate(req, res, next) {
-//     try {
-//       const activationLink = req.params.link;
-//       await userService.activate(activationLink);
-//       return res.redirect(302, process.env.CLIENT_URL);
-//     } catch (e) {
-//       next(e);
-//     }
-//   }
-// }
+export async function confirm(
+  req: Request<any>,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const activationLink = req.params.linkId;
+
+    await activateEmailService(activationLink);
+    res.json({ success: true });
+  } catch (err) {
+    next(err);
+  }
+}
 
 // const routerController = new AuthController();
 // const router = express.Router();
@@ -204,6 +209,6 @@ export async function logout(req: Request, res: Response, next: NextFunction) {
 // );
 // router.get("/refresh", routerController.refresh);
 // router.post("/logout", checkAuth, routerController.logout);
-// router.get("/activate/:linkId", routerController.activate);
+// router.get("/confirm/:linkId", routerController.confirm);
 
 // export default router;

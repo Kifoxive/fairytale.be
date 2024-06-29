@@ -41,7 +41,7 @@ exports.uploadFileService = uploadFileService;
 async function cropImageService(file) {
     return await (0, sharp_1.default)(file.data)
         // .extract({ width: 530, height: 300, left: 0, top: 0 })
-        .resize(400, 300, { fit: "cover", position: "centre" })
+        .resize(500, 375, { fit: "cover", position: "centre" })
         .toBuffer();
 }
 exports.cropImageService = cropImageService;

@@ -29,6 +29,6 @@ const reservationController = __importStar(require("../reservation/reservation.c
 const router = (0, express_1.Router)();
 router.post("/", middleware_1.isAdminAuth, reservationController.postReservation);
 router.get("/", middleware_1.isAdminAuth, reservationController.getAllReservations);
-router.post("/change-status", middleware_1.isAdminAuth, reservationController.changeReservationStatus);
+router.patch("/change-status", middleware_1.isAdminAuth, reservationController.changeReservationStatus);
 exports.default = router;
 //# sourceMappingURL=reservation.js.map

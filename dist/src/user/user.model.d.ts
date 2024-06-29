@@ -27,13 +27,14 @@ declare const UserModel: import("mongoose").Model<{
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
-    firstName: string;
     email: string;
+    firstName: string;
     passwordHash: string;
     role: "admin" | "guest";
     isActivated: boolean;
-    lastName?: string;
+    language: "en" | "cz" | "ua";
     phone?: string;
+    lastName?: string;
     avatarUrl?: string;
 }, {}, {}, {}, Schema<any, import("mongoose").Model<any, any, any, any, any>, {}, {}, {}, {}, import("mongoose").ResolveSchemaOptions<{
     timestamps: true;
@@ -41,13 +42,14 @@ declare const UserModel: import("mongoose").Model<{
     createdAt: NativeDate;
     updatedAt: NativeDate;
 } & {
-    firstName: string;
     email: string;
+    firstName: string;
     passwordHash: string;
     role: "admin" | "guest";
     isActivated: boolean;
-    lastName?: string;
+    language: "en" | "cz" | "ua";
     phone?: string;
+    lastName?: string;
     avatarUrl?: string;
 }>>;
 export default UserModel;

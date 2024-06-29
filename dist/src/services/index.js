@@ -17,4 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./token-service"), exports);
 __exportStar(require("./user-service"), exports);
 __exportStar(require("./file-service"), exports);
+__exportStar(require("./email-service"), exports);
 //# sourceMappingURL=index.js.map

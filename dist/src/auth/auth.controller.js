@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logout = exports.getMe = exports.refresh = exports.loginUser = exports.registerUser = void 0;
+exports.confirm = exports.logout = exports.getMe = exports.refresh = exports.loginUser = exports.registerUser = void 0;
 const services_1 = require("../services");
 const user_model_1 = __importDefault(require("../user/user.model"));
 const exceptions_1 = require("../exceptions");
@@ -131,16 +131,17 @@ async function logout(req, res, next) {
     }
 }
 exports.logout = logout;
-//   async activate(req, res, next) {
-//     try {
-//       const activationLink = req.params.link;
-//       await userService.activate(activationLink);
-//       return res.redirect(302, process.env.CLIENT_URL);
-//     } catch (e) {
-//       next(e);
-//     }
-//   }
-// }
+async function confirm(req, res, next) {
+    try {
+        const activationLink = req.params.linkId;
+        await (0, services_1.activateEmailService)(activationLink);
+        res.json({ success: true });
+    }
+    catch (err) {
+        next(err);
+    }
+}
+exports.confirm = confirm;
 // const routerController = new AuthController();
 // const router = express.Router();
 // router.post(
@@ -172,6 +173,6 @@ exports.logout = logout;
 // );
 // router.get("/refresh", routerController.refresh);
 // router.post("/logout", checkAuth, routerController.logout);
-// router.get("/activate/:linkId", routerController.activate);
+// router.get("/confirm/:linkId", routerController.confirm);
 // export default router;
 //# sourceMappingURL=auth.controller.js.map

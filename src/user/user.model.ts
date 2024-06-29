@@ -20,14 +20,17 @@ const UserSchema = new Schema(
     role: {
       type: String,
       enum: ["admin", "guest"],
-      // required: true,
-      // default: AUTH_ROLE["guest"],
       default: "guest",
     },
     avatarUrl: String,
     isActivated: {
       type: Boolean,
       default: false,
+    },
+    language: {
+      type: String,
+      enum: ["en", "ua", "cz"],
+      default: "en",
     },
   },
   {

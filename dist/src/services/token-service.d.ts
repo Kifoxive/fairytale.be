@@ -24,7 +24,7 @@
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
 import { ITokenPayload } from "src/auth/auth.dtos";
-import { IUser } from "../user/user.dtos";
+import { IUser } from "../user/user.interface";
 export declare function generateTokens(payload: ITokenPayload): {
     accessToken: string;
     refreshToken: string;

@@ -15,12 +15,12 @@ const middleware_1 = require("./middleware");
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const app = (0, express_1.default)();
 const corsOptions = {
-    origin: ["https://fairytale-fe.netlify.app/", "http://localhost:5173"],
+    origin: ["https://fairytale-fe.netlify.app"],
     optionsSuccessStatus: 200,
     credentials: true,
 };
 const corsOptionsDev = {
-    origin: ["https://fairytale-fe.netlify.app/", "http://localhost:5173"],
+    origin: ["https://fairytale-fe.netlify.app", "http://localhost:5173"],
     credentials: true,
 };
 // setting middleware
@@ -47,6 +47,9 @@ app.use("/api/user", routes_1.userRouter);
 app.use("/api/reservation", routes_1.reservationRouter);
 app.use("/api/meal", routes_1.mealController);
 app.use("/api/meal-category", routes_1.mealCategoryController);
+app.get("/fullLogo", (req, res) => {
+    res.sendFile("./assets/fullLogo.png", { root: __dirname });
+});
 //? middleware to log all 500 requests into google cloud
 // app.use(errorLogger);
 process.on("unhandledRejection", (error, promise) => {

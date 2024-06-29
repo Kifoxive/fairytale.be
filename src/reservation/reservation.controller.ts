@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { sendReservationStatusEmailService } from "./../services";
 import { IReservation, ReservationDto } from "./reservation.dtos";
 import {
   PostReservationRequest,
@@ -129,14 +130,21 @@ export async function changeReservationStatus(
       reservation_id: string;
       status: RESERVATION_STATUS;
     };
-    const reservation = await ReservationModel.updateOne(
+    const reservation = await ReservationModel.findOneAndUpdate(
       {
         _id: reservation_id,
       },
       {
         status: RESERVATION_STATUS[status],
+      },
+      {
+        returnDocument: "after",
       }
     );
+    await sendReservationStatusEmailService(
+      ReservationDto(reservation)
+    );
+
     res.json({ data: reservation });
   } catch (err) {
     console.log(err);

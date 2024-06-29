@@ -12,6 +12,7 @@ import {
 } from "./token-service";
 import { ApiError } from "../exceptions";
 import TokenModel from "../auth/auth.model";
+import { sendConfirmationEmailService } from "./email-service";
 
 interface IRegistrationService {
   email: string;
@@ -46,9 +47,9 @@ IRegistrationService) {
 
   const userAuthDto = AuthUserDto(user); // email, fullName, id;
 
-  // await mailService(
+  // await sendConfirmationEmailService(
   //   email,
-  //   `${process.env.API_URL}/auth/activate/${activationLink}`
+  //   `${process.env.FE_URL}/confirm/${activationLink}`
   // );
 
   const tokens = generateTokens(userAuthDto);
@@ -57,7 +58,7 @@ IRegistrationService) {
   return { ...tokens, user: userAuthDto };
 }
 
-// async activate(activationLink) {
+// async confirm(activationLink) {
 //   const user = await UserModel.findOne({ activationLink });
 //   if (!user) {
 //     throw ApiError.BadRequest("Bad activation link");
@@ -115,50 +116,12 @@ export async function refreshTokenService(refreshToken: string) {
   return { ...tokens, user: userDto };
 }
 
-// async getAllUsers() {
-//   const users = await UserModel.find();
-//   return users;
-// }
-// }
+export async function activateEmailService(activationLink: string) {
+  const user = await UserModel.findOne({ activationLink });
 
-// export default new UserService();
-
-// function mailService(to, link) {
-//   try {
-//     let transporter = nodemailer.createTransport({
-//       host: process.env.SMTP_HOST,
-//       service: process.env.SMTP_SERVICE,
-//       port: process.env.SMTP_PORT,
-//       secure: false,
-//       auth: {
-//         user: process.env.SMTP_USER,
-//         pass: process.env.SMTP_PASSWORD,
-//       },
-//       tls: { rejectUnauthorized: false },
-//     });
-//     const mail_configs = {
-//       from: process.env.SMTP_USER,
-//       to,
-//       subject: `Activation on the ${process.env.API_URL}`,
-//       text: "Activation",
-//       html: `
-//           <div>
-//             <h1>Follow the link for activation</h1>
-//             <a href="${link}">${link}</a>
-//           </div>
-//         `,
-//     };
-//     return new Promise((resolve, reject) => {
-//       transporter.sendMail(mail_configs, (error, info) => {
-//         if (error) {
-//           console.log(error);
-//           return reject({ message: "An error has occured" });
-//         }
-//         return resolve({ message: "Email sent succesfully" });
-//       });
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     throw new Error(error);
-//   }
-// }
+  if (!user) {
+    throw ApiError.BadRequest("Bad activation link");
+  }
+  user.isActivated = true;
+  await user.save();
+}

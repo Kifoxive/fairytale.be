@@ -3,9 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateMealCategory = exports.postMealCategory = exports.getOneMealCategory = exports.getMealCategoriesList = exports.getAllMealCategories = void 0;
+exports.updateMealCategory = exports.postMealCategory = exports.getOneMealCategory = exports.getMenu = exports.getMealCategoriesList = exports.getAllMealCategories = void 0;
 const mealCategory_dtos_1 = require("./mealCategory.dtos");
 const mealCategory_model_1 = __importDefault(require("./mealCategory.model"));
+const meal_dtos_1 = require("../meal/meal.dtos");
 async function getAllMealCategories(req, res) {
     try {
         const limit = req.query.limit || 40;
@@ -47,6 +48,47 @@ async function getMealCategoriesList(req, res) {
     }
 }
 exports.getMealCategoriesList = getMealCategoriesList;
+async function getMenu(req, res) {
+    try {
+        const mealCategoriesWithMeals = await mealCategory_model_1.default.aggregate([
+            {
+                $lookup: {
+                    from: "meals",
+                    localField: "_id",
+                    foreignField: "mealCategory_id",
+                    as: "meals", // output array field
+                },
+            },
+            {
+                $project: {
+                    name: 1,
+                    description: 1,
+                    subMealCategoriesId: 1,
+                    order: 1,
+                    show: 1,
+                    meals: 1, // include the "meals" array
+                },
+            },
+        ]);
+        // Apply DTO transformations
+        const formattedMealCategories = mealCategoriesWithMeals.map((category) => {
+            const formattedMeals = category.meals.map((meal) => (0, meal_dtos_1.MealDto)(meal));
+            const formattedCategory = (0, mealCategory_dtos_1.MealCategoryDto)(category);
+            return {
+                ...formattedCategory,
+                meals: formattedMeals,
+            };
+        });
+        res.json({ data: formattedMealCategories });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: "Failed to get meal categories",
+        });
+    }
+}
+exports.getMenu = getMenu;
 async function getOneMealCategory(req, res) {
     try {
         const mealCategoryId = req.params.id;

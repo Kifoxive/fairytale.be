@@ -10,6 +10,7 @@ function UserDto(model) {
         role: model.role,
         avatarUrl: model.avatarUrl,
         isActivated: model.isActivated,
+        language: model.language,
         createdAt: new Date(model.createdAt).getTime(),
         updatedAt: new Date(model.updatedAt).getTime(),
     };

@@ -9,3 +9,4 @@ export declare function getMe(req: Request<{
     };
 }>, res: Response, next: NextFunction): Promise<void>;
 export declare function logout(req: Request, res: Response, next: NextFunction): Promise<express.Response<any, Record<string, any>>>;
+export declare function confirm(req: Request<any>, res: Response, next: NextFunction): Promise<void>;

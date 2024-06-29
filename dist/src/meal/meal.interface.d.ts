@@ -10,16 +10,16 @@ export declare const postMealRequestSchema: () => z.ZodObject<{
         mealCategory_id: z.ZodString;
         imgUrl: z.ZodNullable<z.ZodString>;
     }, "strip", z.ZodTypeAny, {
-        description?: string;
         name?: string;
+        description?: string;
         price?: number;
         weight?: string;
         allergens?: string[];
         mealCategory_id?: string;
         imgUrl?: string;
     }, {
-        description?: string;
         name?: string;
+        description?: string;
         price?: number;
         weight?: string;
         allergens?: string[];
@@ -28,8 +28,8 @@ export declare const postMealRequestSchema: () => z.ZodObject<{
     }>;
 }, "strip", z.ZodTypeAny, {
     data?: {
-        description?: string;
         name?: string;
+        description?: string;
         price?: number;
         weight?: string;
         allergens?: string[];
@@ -38,8 +38,8 @@ export declare const postMealRequestSchema: () => z.ZodObject<{
     };
 }, {
     data?: {
-        description?: string;
         name?: string;
+        description?: string;
         price?: number;
         weight?: string;
         allergens?: string[];

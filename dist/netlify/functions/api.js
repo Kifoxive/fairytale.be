@@ -7,19 +7,6 @@ exports.handler = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const serverless_http_1 = __importDefault(require("serverless-http"));
 const app_1 = __importDefault(require("src/app"));
-const PORT = process.env.PORT || 3000;
-// export const handler = serverless(async () => {
-//   await mongoose
-//     .connect(process.env.DB_URL, {
-//       // useNewUrlParser: true,
-//       // useUnifiedTopology: true,
-//     })
-//     .then(() => console.log("Connected to database"));
-//   app.listen(PORT, function () {
-//     console.log("Started application on port %d", PORT);
-//   });
-//   return app;
-// });
 const handler = async (event, context) => {
     // you can do other things here
     await mongoose_1.default

@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MealModel = void 0;
 const mongoose_1 = require("mongoose");
 const MealSchema = new mongoose_1.Schema({
     name: {
@@ -33,5 +32,6 @@ const MealSchema = new mongoose_1.Schema({
     },
     show: { type: Boolean, default: true },
 });
-exports.MealModel = (0, mongoose_1.model)("Meal", MealSchema);
+const MealModel = (0, mongoose_1.model)("Meal", MealSchema);
+exports.default = MealModel;
 //# sourceMappingURL=meal.model.js.map

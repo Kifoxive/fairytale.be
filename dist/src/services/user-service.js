@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.refreshTokenService = exports.logoutService = exports.loginService = exports.registrationService = void 0;
+exports.activateEmailService = exports.refreshTokenService = exports.logoutService = exports.loginService = exports.registrationService = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const uuid_1 = require("uuid");
 const user_model_1 = __importDefault(require("../user/user.model"));
@@ -29,9 +29,9 @@ async function registrationService({ email, password, firstName, lastName, }) {
         // avatarUrl,
     });
     const userAuthDto = (0, auth_dtos_1.AuthUserDto)(user); // email, fullName, id;
-    // await mailService(
+    // await sendConfirmationEmailService(
     //   email,
-    //   `${process.env.API_URL}/auth/activate/${activationLink}`
+    //   `${process.env.FE_URL}/confirm/${activationLink}`
     // );
     const tokens = (0, token_service_1.generateTokens)(userAuthDto);
     await (0, token_service_1.saveToken)(userAuthDto.user_id, tokens.refreshToken);
@@ -43,7 +43,6 @@ async function loginService({ email, password }) {
     if (!user) {
         throw exceptions_1.ApiError.BadRequest(`Bad login or password`);
     }
-    console.log(user.passwordHash);
     const isPassEquals = await bcrypt_1.default.compare(password, user.passwordHash);
     if (!isPassEquals) {
         throw exceptions_1.ApiError.BadRequest(`Bad login or password`);
@@ -76,49 +75,13 @@ async function refreshTokenService(refreshToken) {
     return { ...tokens, user: userDto };
 }
 exports.refreshTokenService = refreshTokenService;
-// async getAllUsers() {
-//   const users = await UserModel.find();
-//   return users;
-// }
-// }
-// export default new UserService();
-// function mailService(to, link) {
-//   try {
-//     let transporter = nodemailer.createTransport({
-//       host: process.env.SMTP_HOST,
-//       service: process.env.SMTP_SERVICE,
-//       port: process.env.SMTP_PORT,
-//       secure: false,
-//       auth: {
-//         user: process.env.SMTP_USER,
-//         pass: process.env.SMTP_PASSWORD,
-//       },
-//       tls: { rejectUnauthorized: false },
-//     });
-//     const mail_configs = {
-//       from: process.env.SMTP_USER,
-//       to,
-//       subject: `Activation on the ${process.env.API_URL}`,
-//       text: "Activation",
-//       html: `
-//           <div>
-//             <h1>Follow the link for activation</h1>
-//             <a href="${link}">${link}</a>
-//           </div>
-//         `,
-//     };
-//     return new Promise((resolve, reject) => {
-//       transporter.sendMail(mail_configs, (error, info) => {
-//         if (error) {
-//           console.log(error);
-//           return reject({ message: "An error has occured" });
-//         }
-//         return resolve({ message: "Email sent succesfully" });
-//       });
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     throw new Error(error);
-//   }
-// }
+async function activateEmailService(activationLink) {
+    const user = await user_model_1.default.findOne({ activationLink });
+    if (!user) {
+        throw exceptions_1.ApiError.BadRequest("Bad activation link");
+    }
+    user.isActivated = true;
+    await user.save();
+}
+exports.activateEmailService = activateEmailService;
 //# sourceMappingURL=user-service.js.map

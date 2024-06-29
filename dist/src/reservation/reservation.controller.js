@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.changeReservationStatus = exports.postReservation = exports.getAllReservations = void 0;
+const services_1 = require("./../services");
 const reservation_dtos_1 = require("./reservation.dtos");
 const reservation_interface_1 = require("./reservation.interface");
 const reservation_model_1 = __importDefault(require("./reservation.model"));
@@ -116,11 +117,12 @@ exports.postReservation = postReservation;
 async function changeReservationStatus(req, res) {
     try {
         const { reservation_id, status } = req.body.data;
-        const reservation = await reservation_model_1.default.updateOne({
+        const reservation = await reservation_model_1.default.findOneAndUpdate({
             _id: reservation_id,
         }, {
             status: reservation_interface_1.RESERVATION_STATUS[status],
         });
+        await (0, services_1.sendReservationStatusEmailService)(reservation.email, (0, reservation_dtos_1.ReservationDto)(reservation), status);
         res.json({ data: reservation });
     }
     catch (err) {

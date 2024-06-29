@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { ITokenPayload } from "src/auth/auth.dtos";
 import TokenModel from "../auth/auth.model";
-import { IUser } from "../user/user.dtos";
+import { IUser } from "../user/user.interface";
 
 export function generateTokens(payload: ITokenPayload) {
   const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {

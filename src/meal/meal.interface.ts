@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Schema } from "mongoose";
+import { Schema, Document } from "mongoose";
 
 // request for meal creating
 export const postMealRequestSchema = () =>

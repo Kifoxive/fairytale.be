@@ -6,7 +6,7 @@ const router = Router();
 
 router.post("/", isAdminAuth, reservationController.postReservation);
 router.get("/", isAdminAuth, reservationController.getAllReservations);
-router.post(
+router.patch(
   "/change-status",
   isAdminAuth,
   reservationController.changeReservationStatus

@@ -23,10 +23,10 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Schema } from "mongoose";
-export declare const MealModel: import("mongoose").Model<{
+declare const MealModel: import("mongoose").Model<{
     allergens: unknown[];
-    description?: unknown;
     name?: unknown;
+    description?: unknown;
     price?: unknown;
     weight?: unknown;
     mealCategory_id?: import("mongoose").Types.ObjectId;
@@ -44,3 +44,4 @@ export declare const MealModel: import("mongoose").Model<{
     imgUrl?: string;
     order?: number;
 }>>;
+export default MealModel;

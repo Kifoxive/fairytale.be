@@ -14,14 +14,15 @@ interface ILoginService {
     password: string;
 }
 export declare function loginService({ email, password }: ILoginService): Promise<{
-    user: import("../user/user.dtos").IUser;
+    user: import("../user/user.interface").IUser;
     accessToken: string;
     refreshToken: string;
 }>;
 export declare function logoutService(refreshToken: string): Promise<void>;
 export declare function refreshTokenService(refreshToken: string): Promise<{
-    user: import("../user/user.dtos").IUser;
+    user: import("../user/user.interface").IUser;
     accessToken: string;
     refreshToken: string;
 }>;
+export declare function activateEmailService(activationLink: string): Promise<void>;
 export {};

@@ -60,6 +60,10 @@ app.use("/api/user", userRouter);
 app.use("/api/reservation", reservationRouter);
 app.use("/api/meal", mealController);
 app.use("/api/meal-category", mealCategoryController);
+// app.get("/fullLogo", (req, res) => {
+//   res.sendFile("./assets/fullLogo.png", { root: __dirname });
+// });
+app.use("/", express.static("assets"));
 
 //? middleware to log all 500 requests into google cloud
 // app.use(errorLogger);
